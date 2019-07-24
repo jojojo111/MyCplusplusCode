@@ -1,3 +1,4 @@
+#include<stdio.h>
 #include<iostream>
 #include<cmath>
 #include<complex>
@@ -213,7 +214,7 @@ void GetFish()
 		  判断是否两边平方和等于第三条边的平方，则为直角三角形
 		  否则为普通三角形
 */
-#endif
+
 void Triangle(int a,int b,int c)
 {
 	assert(a > 0 && b > 0 && c > 0);
@@ -497,6 +498,86 @@ void totalWords(char * str)
 	printf("%d\n", count);
 }
 
+/*
+编程07.22
+01.	在本实例中要求设计一个加密和解密算法。在对一个指定的字符串加密之后，
+	利用解密函数能够对密文解密，显示明文信息。加密的方式是将字符串中每
+	个字符加上它在字符串中的位置和一个偏移值 5。以字符串“mrsoft”为例，
+	第一个字符“m”在字符串中的位置为 0，那么它对应的密文是“'m'+0+5"，即 r。
+思路：编写两个函数：加密函数和解密函数
+*/
+void Screct(char * str)
+{
+	char screct[128] = { 0 };
+	int i = 0;
+	int j = 0;
+	while (*str != '\0')
+	{
+		screct[i] = *str + i + 5;
+		i++;
+		str++;
+	}
+	screct[i] = '\0';
+	
+	while (screct[j] != 0)
+	{
+		printf("%c", screct[j]);
+		j++;
+	}
+	printf("\n");
+}
+#endif
+/*
+编程07.23
+01.	编号为 1，2，3，…，n 的 n 个人围坐一圈，任选一个正整数 m 作为报数上限值，
+	从第一个人开始按顺时针方向报数，报数到 m 时停止，报数为 m 的人出列。从出
+	列人的顺时针方向的下一个人开始又从 1 重新报数，如此下去，直到所有人都全部
+	出列为止。(约瑟夫环)
+思路：
+	
+
+*/
+#define MAX 100
+void Josephus(int a[],int n,int m)
+{	//n:总人数 m:停止
+	int i;
+	int	j;//统计报的数
+	int	k = 0;
+	for (i = 0; i<n; i++)
+	{
+		j = 1;
+		while (j<m)
+		{
+			while (a[k] == 0)
+				k = (k + 1) % n;
+			j++;
+			k = (k + 1) % n;
+		}
+
+		while (a[k] == 0)
+			k = (k + 1) % n;
+		printf("%d ", a[k]);
+		a[k] = 0;
+	}
+}
+void JosephusOutput(int n,int m)
+{
+	int a[MAX];
+	for (int i = 0; i<n; i++)
+		a[i] = i + 1;
+
+	Josephus(a, n, m);
+	printf("\n");
+}
+
+
+int ysfdg(int sum, int value, int n)
+{
+	if (n == 1)
+		return (sum + value - 1) % sum;
+	else
+		return (ysfdg(sum - 1, value, n - 1) + value) % sum;
+}
 
 int main()
 {
@@ -517,6 +598,9 @@ int main()
 	//rabbit();
 	//get_rabbit();
 	//LastChild();
-	totalWords("I am a student");
+	//totalWords("I am a student");
+	//Screct("hello");
+	JosephusOutput(100,10);
 	return 0;
 }
+
